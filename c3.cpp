@@ -98,7 +98,7 @@ void printStringF(const char *fmt, ...) {
     char buf[ 256];
     va_list args;
     va_start(args, fmt);
-    vsnprintf(buf, 128, fmt, args);
+    vsnprintf(buf, sizeof( buf)-1, fmt, args);
     va_end(args);
     printString(buf);
 

@@ -56,8 +56,8 @@ typedef uint8_t  byte;
 
     #define MAX_LINES          64
     #define LLEN               64
-    #define CODE_SZ            8*1024
-    #define VARS_SZ            8*1024
+    #define CODE_SZ            10*1024
+    #define VARS_SZ            16*1024
     #define STK_SZ            256
     #define LSTK_SZ             3*25      // 25 nested loops
     #define REGS_SZ            10*25      // 25 nested +REGS
