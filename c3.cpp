@@ -94,14 +94,22 @@ int strEqN(const char *s, const char *d, cell_t n) {
 }
 
 void printStringF(const char *fmt, ...) {
-    char *buf = (char*)last;
-    buf -= 256;
-    if (buf<here) { buf=here+1; }
+//    printString( "printStringF");
+    char buf[ 256];
     va_list args;
     va_start(args, fmt);
-    vsnprintf(buf, 250, fmt, args);
+    vsnprintf(buf, 128, fmt, args);
     va_end(args);
     printString(buf);
+
+    // char *buf = (char*)last;
+    // buf -= 256;
+    // if (buf<here) { buf=here+1; }
+    // va_list args;
+    // va_start(args, fmt);
+    // vsnprintf(buf, 250, fmt, args);
+    // va_end(args);
+    // printString(buf);
 }
 
 char *iToA(cell_t N, int b) {

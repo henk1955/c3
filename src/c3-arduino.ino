@@ -4,17 +4,19 @@
 
 #include "c3.h"
 #include "file.h"
+#include "fshell.h"
 
 #define mySerial Serial
 
 enum { FOPEN=101, FCLOSE, FREAD, FWRITE, FLOAD, BLOAD,
     OPEN_INPUT=110, OPEN_OUTPUT, OPEN_PULLUP,
     PIN_READ, PIN_READA, PIN_WRITE, PIN_WRITEA,
-    EDIT_BLK
+    EDIT_BLK,
+    X_PWD, X_CD, X_LS, X_MKDIR, X_RMDIR, X_DELETE, X_RENAME
 };
 
 #ifdef mySerial
-    void serialInit() { mySerial.begin( 19200); while (!mySerial) ; }
+    void serialInit() { mySerial.begin( 19200);}
     void printChar(char c) { mySerial.print(c); }
     void printString(const char *s) { mySerial.print(s); }
     int qKey() {
@@ -66,6 +68,13 @@ void loadUserWords() {
     parseF("-ML- (LOAD)       %d 3 -MLX- inline", FLOAD);
     parseF("-ML- BLOAD       %d 3 -MLX- inline", BLOAD);
     parseF("-ML- EDIT        %d 3 -MLX- inline", EDIT_BLK);
+    parseF("-ML- PWD         %d 3 -MLX- inline", X_PWD);
+    parseF("-ML- CD          %d 3 -MLX- inline", X_CD);
+    parseF("-ML- LS          %d 3 -MLX- inline", X_LS);
+    parseF("-ML- MKDIR       %d 3 -MLX- inline", X_MKDIR);
+    parseF("-ML- RMDIR       %d 3 -MLX- inline", X_RMDIR);
+    parseF("-ML- DELETE       %d 3 -MLX- inline", X_DELETE);
+    parseF("-ML- RENAME       %d 3 -MLX- inline", X_RENAME);
     parseF(": isPC 0 ;");
 }
 
@@ -122,16 +131,28 @@ char *doUser(char *pc, int ir) {
     //         else { printStringF("-noFile[%s]-", (char*)n); }
     // RCASE BLOAD:  blockLoad((int)pop());
     RCASE EDIT_BLK: t=pop(); editBlock(t);
+
+    RCASE X_PWD:  handle_PWD();
+    RCASE X_CD:   push( handle_CD( (char*) pop()));
+    RCASE X_LS:   handle_LS( (char*) pop());
+    RCASE X_MKDIR: push( handle_MKDIR( (char*) pop()));
+    RCASE X_RMDIR: push( handle_RMDIR( (char*) pop()));
+    RCASE X_DELETE: push( handle_DELETE( (char*) pop()));
+    RCASE X_RENAME: push( handle_RENAME( (char*) pop()));
+
     return pc; default: return 0;
   }
 }
 
 void setup() {
   serialInit();
+  delay(5);
   fileInit();
   c3Init();
   input_fp = 0;
   in = (char*)0;
+
+  printString(" ok\r\n");
 }
 
 void idle() {
@@ -148,9 +169,10 @@ void loop() {
 
   if (c==9) { c = 32; }
   if (c==13 || c==10) {
+      printString("\r\n");
       *(in) = 0;
       ParseLine(tib);
-      if( ! input_fp) mySerial.println();
+      if( ! input_fp) printString(" ok\r\n");
       in = 0;
   } else if ((c==8) || (c==127)) {
       if ((--in) < tib) { in = tib; }

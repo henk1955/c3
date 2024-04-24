@@ -13,7 +13,7 @@ void fileInit() {
     FSInfo fs_info;
     LittleFS.info(fs_info);
     printString("\r\nLittleFS: initialized\r\n");
-    printStringF("\r\nBytes total: %llu, used: %llu\r\n", fs_info.totalBytes, fs_info.usedBytes);
+    printStringF("Bytes total: %d, used: %d\r\n", fs_info.totalBytes, fs_info.usedBytes);
     printString("\r\n");
     input_fp = input_sp = 0;
     for (int i=0;i<=NFILES;i++) { files[i] = File(); }
