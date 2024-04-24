@@ -3,8 +3,8 @@ app := c3
 CXX := clang++
 CXXFLAGS := -m64 -O3 -DIS_LINUX
 
-srcfiles := $(shell find . -name "*.cpp")
-incfiles := $(shell find . -name "*.h")
+srcfiles := $(shell find . -maxdepth 1 -name "*.cpp")
+incfiles := $(shell find . -maxdepth 1 -name "*.h")
 LDLIBS   := -lm
 
 all: $(app)

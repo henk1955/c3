@@ -35,6 +35,8 @@ typedef uint8_t  byte;
     #define isPC
     #define IS_WINDOWS
     #define __EDITOR__
+    #define MAX_LINES          150
+    #define LLEN               100
     // #define _SYS_LOAD_
 #elif (defined __i386 || defined __x86_64 || defined IS_LINUX)
     #define isPC
@@ -42,6 +44,8 @@ typedef uint8_t  byte;
     #define IS_LINUX
     #endif
     #define __EDITOR__
+    #define MAX_LINES          150
+    #define LLEN               100
     // #define _SYS_LOAD_
 #else
 
@@ -51,8 +55,9 @@ typedef uint8_t  byte;
 #define isBOARD 1
 
     #define MAX_LINES          64
-    #define CODE_SZ            64*1024
-    #define VARS_SZ            64*1024
+    #define LLEN               64
+    #define CODE_SZ            16*1024
+    #define VARS_SZ            16*1024
     #define STK_SZ            256
     #define LSTK_SZ             3*25      // 25 nested loops
     #define REGS_SZ            10*25      // 25 nested +REGS
@@ -61,7 +66,7 @@ typedef uint8_t  byte;
     #define NEEDS_ALIGN
     #define __EDITOR__
     #define _SYS_LOAD_
-    // #define _LITTLEFS_
+    #define _LITTLEFS_
 
 #endif
 
