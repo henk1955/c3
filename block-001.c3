@@ -38,6 +38,9 @@
 : ." T3 STATE @ 0= IF DROP ZTYPE EXIT THEN
         (VHERE) ! (LIT) C, , (ZTYPE) C, ; IMMEDIATE
 
+: pad VHERE  256 + ;
+: >pad pad tuck swap S-CPY ;
+
 : code-end  code code-sz + ;
 : vars-end  vars vars-sz + ;
 

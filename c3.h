@@ -66,7 +66,7 @@ typedef uint8_t  byte;
     #define __EDITOR__
     #define theBlock vars
     #define edBuf code
-    #define LLEN               80
+    #define LLEN               100
     #define MAX_LINES          CODE_SZ / LLEN
 
 //    #define _SYS_LOAD_
