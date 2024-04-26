@@ -54,9 +54,7 @@ typedef uint8_t  byte;
     //       I use these for the Teensy-4 and the Pico
 #define isBOARD 1
 
-    #define MAX_LINES          64
-    #define LLEN               64
-    #define CODE_SZ            10*1024
+    #define CODE_SZ            16*1024
     #define VARS_SZ            16*1024
     #define STK_SZ            256
     #define LSTK_SZ             3*25      // 25 nested loops
@@ -64,8 +62,14 @@ typedef uint8_t  byte;
     #define TIB_SZ            512
     #define NAME_LEN           17
     #define NEEDS_ALIGN
+
     #define __EDITOR__
-    #define _SYS_LOAD_
+    #define theBlock vars
+    #define edBuf code
+    #define LLEN               80
+    #define MAX_LINES          CODE_SZ / LLEN
+
+//    #define _SYS_LOAD_
     #define _LITTLEFS_
 
 #endif
@@ -91,6 +95,7 @@ typedef struct { cell_t xt; byte f; byte len; char name[NAME_LEN+1]; } dict_t;
 extern cell_t lstk[LSTK_SZ+1], lsp, output_fp;
 extern cell_t state, base, reg[REGS_SZ], reg_base, t1, n1;
 extern char tib[TIB_SZ], *in, *y, *here;
+extern char code[CODE_SZ];
 extern char vars[VARS_SZ];
 
 extern void push(cell_t x);
@@ -151,5 +156,7 @@ extern void loadUserWords();
 // Editor
 extern void editBlock(cell_t blkNum);
 extern cell_t edScrH;
+
+extern void intercept();
 
 #endif // __C3_H__

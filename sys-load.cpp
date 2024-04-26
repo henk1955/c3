@@ -115,7 +115,7 @@
         ParseLine(": ? @ . ;");
         ParseLine(": RSHIFT ( N1 S--N2 ) 0 DO 2/ LOOP ;");
         ParseLine(": LSHIFT ( N1 S--N2 ) 0 DO 2* LOOP ;");
-        ParseLine(": load next-word DROP (load) ;");
+//        ParseLine(": load next-word DROP (load) ;");
         ParseLine(": load-abort #99 state ! ;");
         ParseLine(": loaded? IF 2drop load-abort THEN ;");
         ParseLine("variable T0 2 CELLS allot");

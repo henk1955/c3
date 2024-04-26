@@ -329,6 +329,7 @@ char *doFloatOp(char *pc) {
 void Run(char *pc) {
     flt_t f1;
 next:
+    intercept();
     switch (*(pc++)) {
         case STOP: return;
         NCASE LIT1: push(*(pc++));

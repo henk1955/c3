@@ -20,10 +20,13 @@ CELL edScrH = 0;
 #define DIRTY(l)      isDirty=1; SHOW(l,1)
 
 enum { NORMAL = 1, INSERT, REPLACE, QUIT };
+#ifndef theBlock
 static char theBlock[BLOCK_SZ];
+static char edBuf[BLOCK_SZ];
+#endif
 static int line, off, blkNum, edMode, scrTop;
 static int isDirty, lineShow[MAX_LINES];
-static char edBuf[BLOCK_SZ], tBuf[LLEN], mode[32], *msg = NULL;
+static char tBuf[LLEN], mode[32], *msg = NULL;
 static char yanked[LLEN];
 CELL edScrH = SCR_HEIGHT; // can be set from c3 using '50 (scr-h) !'
 

@@ -1,4 +1,5 @@
 # c3 - A stack-based VM written in C.
+**Note:** this is my version for ESP8266
 
 ## What is c3?
 - c3 is a stack-based, byte-coded VM.
